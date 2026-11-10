@@ -57,4 +57,9 @@ public class LibroService {
 
         return libroRepository.save(libroExistente);
     }
+    public void eliminar(Long id) {
+        Libro libro = buscarPorId(id);
+
+        libroRepository.delete(libro);
+    }
 }

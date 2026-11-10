@@ -56,4 +56,11 @@ public class LibroController {
         return ResponseEntity.ok(libroActualizado);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+
+        libroService.eliminar(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
