@@ -6,6 +6,7 @@ import ar.edu.daw1.tpdaw1tello.repository.SocioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import ar.edu.daw1.tpdaw1tello.repository.PrestamoRepository;
 
 import java.util.List;
 
@@ -13,9 +14,14 @@ import java.util.List;
 public class SocioService {
 
     private final SocioRepository socioRepository;
+    private final PrestamoRepository prestamoRepository;
 
-    public SocioService(SocioRepository socioRepository) {
+    public SocioService(
+            SocioRepository socioRepository,
+            PrestamoRepository prestamoRepository
+    ) {
         this.socioRepository = socioRepository;
+        this.prestamoRepository = prestamoRepository;
     }
 
     public Socio crear(Socio socio) {
@@ -42,8 +48,17 @@ public class SocioService {
 
         return socioRepository.save(socioExistente);
     }
+
     public void eliminar(Long id) {
         Socio socio = buscarPorId(id);
+
+        if (prestamoRepository.countBySocioIdAndEstadoNot(
+                id, "DEVUELTO") > 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "No se puede eliminar el socio porque tiene préstamos pendientes"
+            );
+        }
 
         socioRepository.delete(socio);
     }

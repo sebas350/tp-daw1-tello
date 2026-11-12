@@ -28,6 +28,18 @@ public class Prestamo {
     @Column(nullable = false)
     private LocalDate fechaDevolucion;
 
+    @Column
+    private LocalDate fechaRealDevolucion;
+
+    @Column
+    private java.math.BigDecimal multa = java.math.BigDecimal.ZERO;
+
+    @Column
+    private Boolean multaPagada = false;
+
+    @Column
+    private Boolean renovado = false;
+
     @Column(nullable = false)
     private String estado = "ACTIVO";
 
@@ -75,5 +87,37 @@ public class Prestamo {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public LocalDate getFechaRealDevolucion() {
+        return fechaRealDevolucion;
+    }
+
+    public void setFechaRealDevolucion(LocalDate fechaRealDevolucion) {
+        this.fechaRealDevolucion = fechaRealDevolucion;
+    }
+
+    public java.math.BigDecimal getMulta() {
+        return multa;
+    }
+
+    public void setMulta(java.math.BigDecimal multa) {
+        this.multa = multa;
+    }
+
+    public boolean isMultaPagada() {
+        return Boolean.TRUE.equals(multaPagada);
+    }
+
+    public void setMultaPagada(Boolean multaPagada) {
+        this.multaPagada = multaPagada;
+    }
+
+    public boolean isRenovado() {
+        return Boolean.TRUE.equals(renovado);
+    }
+
+    public void setRenovado(Boolean renovado) {
+        this.renovado = renovado;
     }
 }

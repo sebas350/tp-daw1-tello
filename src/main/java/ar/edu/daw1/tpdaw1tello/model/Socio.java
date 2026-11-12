@@ -18,9 +18,13 @@ public class Socio {
     private String nombre;
 
     @NotBlank(message = "no debe estar vacío")
+
     @Email(message = "debe tener un formato de email válido")
     @Column(nullable = false)
     private String email;
+
+    @Column
+    private Boolean suspendido = false;
 
     public Socio() {
     }
@@ -48,5 +52,13 @@ public class Socio {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isSuspendido() {
+        return Boolean.TRUE.equals(suspendido);
+    }
+
+    public void setSuspendido(Boolean suspendido) {
+        this.suspendido = suspendido;
     }
 }

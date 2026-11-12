@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ar.edu.daw1.tpdaw1tello.dto.LibroRankingDTO;
 
 import java.net.URI;
 
@@ -37,8 +38,21 @@ public class LibroController {
     }
 
     @GetMapping
-    public ResponseEntity<java.util.List<Libro>> listar() {
+    public ResponseEntity<java.util.List<Libro>> listar(
+            @RequestParam(required = false) Boolean disponible) {
+
+        if (Boolean.TRUE.equals(disponible)) {
+            return ResponseEntity.ok(libroService.listarDisponibles());
+        }
+
         return ResponseEntity.ok(libroService.listar());
+    }
+
+    @GetMapping("/mas-prestados")
+    public ResponseEntity<java.util.List<LibroRankingDTO>> listarMasPrestados(
+            @RequestParam(defaultValue = "5") int top) {
+
+        return ResponseEntity.ok(libroService.listarMasPrestados(top));
     }
 
     @GetMapping("/{id}")
